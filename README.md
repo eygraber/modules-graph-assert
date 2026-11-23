@@ -1,4 +1,7 @@
 # Module Graph Assert
+
+This fork of [eduardbosch/modules-graph-assert](https://github.com/eduardbosch/modules-graph-assert) publishes to Maven Central under the `com.eygraber` group. Add `mavenCentral()` to the `pluginManagement` repositories to resolve it.
+
 A Gradle plugin that helps keep your module graph healthy and lean.
 
 - [Medium Article](https://proandroiddev.com/module-rules-protect-your-build-time-and-architecture-d1194c7cc6bc) with complete context.
@@ -6,7 +9,7 @@ A Gradle plugin that helps keep your module graph healthy and lean.
 - [Changelog](https://github.com/jraska/modules-graph-assert/releases)
 
 [![Build](https://github.com/jraska/modules-graph-assert/actions/workflows/build.yml/badge.svg)](https://github.com/jraska/modules-graph-assert/actions/workflows/build.yml)
-[![Gradle Plugin](https://img.shields.io/badge/Gradle-Plugin-green)](https://plugins.gradle.org/plugin/io.github.eduardbosch.module.graph.assertion)
+[![Maven Central](https://img.shields.io/maven-central/v/com.eygraber/modules-graph-assert)](https://central.sonatype.com/artifact/com.eygraber/modules-graph-assert)
 
 <img width="1281" alt="example_graph" src="https://user-images.githubusercontent.com/6277721/70832705-18980e00-1df6-11ea-8b78-fc07ba570a2b.png">
 
@@ -36,7 +39,7 @@ In your `settings.gradle(.kts)`:
 
 ```kotlin
 plugins {
-  id("io.github.eduardbosch.module.graph.assertion.settings") version "2.10.1"
+  id("com.eygraber.module.graph.assertion.settings") version "2.11.0.1"
 }
 ```
 
@@ -44,7 +47,7 @@ Or in Groovy:
 
 ```groovy
 plugins {
-  id "io.github.eduardbosch.module.graph.assertion.settings" version "2.10.1"
+  id "com.eygraber.module.graph.assertion.settings" version "2.11.0.1"
 }
 ```
 
@@ -54,7 +57,7 @@ In your root `build.gradle(.kts)`:
 
 ```kotlin
 plugins {
-  id("io.github.eduardbosch.module.graph.assertion")
+  id("com.eygraber.module.graph.assertion")
 }
 
 moduleGraphAssert {
@@ -68,7 +71,7 @@ Or in Groovy:
 
 ```groovy
 plugins {
-  id "io.github.eduardbosch.module.graph.assertion"
+  id "com.eygraber.module.graph.assertion"
 }
 
 moduleGraphAssert {
@@ -170,6 +173,6 @@ includeBuild("path/to/modules-graph-assert")
 Root build.gradle:
 ```groovy
 plugins {
-  id('io.github.eduardbosch.module.graph.assertion')
+  id('com.eygraber.module.graph.assertion')
 }
 ```
