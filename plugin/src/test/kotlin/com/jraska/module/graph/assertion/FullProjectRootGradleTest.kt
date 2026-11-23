@@ -13,14 +13,14 @@ class FullProjectRootGradleTest {
   fun printsCorrectStatisticsForRootProjectWithDependency() {
     testProjectDir.newFile("settings.gradle").writeText("""
       plugins {
-          id 'io.github.eduardbosch.module.graph.assertion.settings'
+          id 'com.eygraber.module.graph.assertion.settings'
       }
       include ':core'
     """)
 
     createRoot(content = """
       plugins {
-          id 'io.github.eduardbosch.module.graph.assertion'
+          id 'com.eygraber.module.graph.assertion'
       }
       apply plugin: 'java-library'
       
@@ -49,14 +49,14 @@ class FullProjectRootGradleTest {
   fun printsCorrectStatisticsForIndependentRootProject() {
     testProjectDir.newFile("settings.gradle").writeText("""
       plugins {
-          id 'io.github.eduardbosch.module.graph.assertion.settings'
+          id 'com.eygraber.module.graph.assertion.settings'
       }
       include ':app'
     """)
 
     createRoot(content = """
       plugins {
-          id 'io.github.eduardbosch.module.graph.assertion'
+          id 'com.eygraber.module.graph.assertion'
       }
       apply plugin: 'java-library'
       
@@ -68,7 +68,7 @@ class FullProjectRootGradleTest {
     createModule(
       "app", content = """
       plugins {
-          id 'io.github.eduardbosch.module.graph.assertion'
+          id 'com.eygraber.module.graph.assertion'
       }
       apply plugin: 'java-library'
       moduleGraphAssert {

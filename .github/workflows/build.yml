@@ -5,6 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
+      - name: Configure JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: 21
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
       - name: Run Tests
         run: ./gradlew check --stacktrace

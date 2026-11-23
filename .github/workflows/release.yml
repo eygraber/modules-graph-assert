@@ -1,15 +1,50 @@
-name: Release To Gradle Plugins
+name: release
+
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      number:
+        description: 'The release number in the 2.11.0.X series (e.g. 2 releases 2.11.0.2).'
+        required: true
+        type: string
+
 env:
-  GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}
-  GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
+  GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false -Dkotlin.incremental=false"
+  RELEASE_VERSION: 2.11.0.${{ inputs.number }}
+
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/eygraber'
+
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v3
-      - name: Publish Release
-        run: ./gradlew publishPlugins -Pgradle.publish.key=$GRADLE_PUBLISH_KEY -Pgradle.publish.secret=$GRADLE_PUBLISH_SECRET --stacktrace
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Configure JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Publish Artifacts
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository "-PVERSION_NAME=${{ env.RELEASE_VERSION }}"
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_SECRET_KEY }}
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          target_commitish: ${{ github.sha }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

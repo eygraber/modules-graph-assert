@@ -16,7 +16,7 @@ class CustomConfigurationsGradleTest {
     testProjectDir.newFile("settings.gradle").writeText(
       """
       plugins {
-          id 'io.github.eduardbosch.module.graph.assertion.settings'
+          id 'com.eygraber.module.graph.assertion.settings'
       }
       include ':app', ':core', ':core-testing'
     """
@@ -37,7 +37,7 @@ class CustomConfigurationsGradleTest {
     createModule(
       "app", content = """
           plugins {
-              id 'io.github.eduardbosch.module.graph.assertion'
+              id 'com.eygraber.module.graph.assertion'
           }
           apply plugin: 'java-library'
 
